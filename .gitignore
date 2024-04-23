@@ -13,7 +13,7 @@ web-build/
 *.orig.*
 *.jks
 *.p8
-*.p12
+*.p12 
 *.key
 *.mobileprovision
 

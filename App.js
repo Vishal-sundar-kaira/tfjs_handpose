@@ -52,15 +52,7 @@ const HAND_CONNECTIONS = [
   [19, 20], // Pinky
 ];
 
-const textureDims = Platform.OS === 'ios' ?
-  {
-    height: 1920,
-    width: 1080,
-  } :
-  {
-    height: 1200,
-    width: 1600,
-  };
+
 
 const TensorCamera = cameraWithTensors(Camera);
 
@@ -70,10 +62,8 @@ export default function App() {
   const [handposeModel, setHandposeModel] = useState();
   const [handposeModelLoaded, setHandposeModelLoaded] = useState(false);
 
-  const [handmodel, sethandmodel] = useState(null);
   let context = useRef();
   let canvas = useRef();
-  const [ismodelready, setismodelready] = useState(false);
 
   const class_names = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
     'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
@@ -204,12 +194,8 @@ Platform.OS === "ios"
         const { status } = await Camera.requestCameraPermissionsAsync();
         setHasPermission(status === 'granted');
         await initialiseTensorflow();
-        console.log("Loading model...");
-        const modelJson = require("./assets/models4/model.json");
-        const model = await tf.loadLayersModel(tf.io.fromMemory(modelJson));
-        setModel(model);
-        console.log("Model loaded successfully");
         const model2 = await handpose.load(MODEL_CONFIG);
+        console.log("not probelm with model")
         setHandposeModel(model2);
         setHandposeModelLoaded(true);
         console.log("Handpose model loaded successfully");
@@ -236,9 +222,6 @@ Platform.OS === "ios"
 
   const stopCamera = () => {
     cameraActiveRef.current = false;
-    Speech.speak(predictions.join(''))
-    setPredictions([]);
-    setCurr();
   };
 
   return (
